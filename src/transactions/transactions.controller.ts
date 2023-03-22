@@ -21,9 +21,4 @@ export class TransactionsController {
     findOne(@Param('id') id: string) {
         return this.transactionsService.findOne(id);
     }
-
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.transactionsService.remove(id);
-    }
 }
