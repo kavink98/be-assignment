@@ -25,7 +25,6 @@ export class WalletsService {
     }
 
     update(id: string, amount: number) {
-        console.log(id, amount);
         return this.walletModel.findOneAndUpdate({ address: id }, { $inc: { balance: amount } }).exec();
     }
 
