@@ -4,15 +4,24 @@ import { Model } from 'mongoose';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
+import { WalletsService } from 'src/wallets/wallets.service';
 
 @Injectable()
 export class TransactionsService {
 
-    constructor(@InjectModel(Transaction.name) private transactionModel: Model<TransactionDocument>) { }
+    constructor(@InjectModel(Transaction.name) private transactionModel: Model<TransactionDocument>, private readonly walletService: WalletsService) { }
 
-    create(createTransactionDto: CreateTransactionDto) {
+    async create(createTransactionDto: CreateTransactionDto) {
         const createdTransaction = new this.transactionModel(createTransactionDto);
-        return createdTransaction.save();
+
+        const transactionDoc = await createdTransaction.save();
+
+        const transaction = transactionDoc.toObject();
+
+        this.walletService.update(transaction.fromAddress, (-1 * transaction.amount));
+        this.walletService.update(transaction.toAddress, transaction.amount);
+
+        return transactionDoc;
     }
 
     findAll() {

@@ -21,11 +21,12 @@ export class WalletsService {
     }
 
     findOne(id: string) {
-        return this.walletModel.findById(id).exec()
+        return this.walletModel.findOne({ address: id }).exec()
     }
 
-    update(id: string, updateWalletDto: UpdateWalletDto) {
-        return `This action updates a #${id} wallet`;
+    update(id: string, amount: number) {
+        console.log(id, amount);
+        return this.walletModel.findOneAndUpdate({ address: id }, { $inc: { balance: amount } }).exec();
     }
 
     remove(id: string) {

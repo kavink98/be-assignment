@@ -17,6 +17,16 @@ export class Transaction {
 
     @Prop()
     amount: number;
+
+    @Prop()
+    gasUsed: number;
+
+    @Prop()
+    status: string;
+
+    @Prop()
+    timestamp: Date;
+
 }
 
 export const TransactionSchema = SchemaFactory.createForClass(Transaction);
