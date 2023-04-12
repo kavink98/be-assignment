@@ -7,14 +7,25 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 export class TransactionsController {
     constructor(private readonly transactionsService: TransactionsService) { }
 
+    // @Post()
+    // create(@Body() createTransactionDto: CreateTransactionDto) {
+    //     return this.transactionsService.create(createTransactionDto);
+    // }
+
     @Post()
-    create(@Body() createTransactionDto: CreateTransactionDto) {
-        return this.transactionsService.create(createTransactionDto);
+    async createTransaction(@Body() createTransactionDto: CreateTransactionDto) {
+        const transactionReceipt = await this.transactionsService.sendTransaction(
+            createTransactionDto.fromAddress,
+            createTransactionDto.toAddress,
+            createTransactionDto.amount,
+            createTransactionDto.password,
+        );
+        return { transactionReceipt };
     }
 
     @Get()
-    findAll() {
-        return this.transactionsService.findAll();
+    findAllTransactions() {
+        return this.transactionsService.getAllTransactions();
     }
 
     @Get(':id')
