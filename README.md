@@ -1,7 +1,28 @@
 
 # Student Info
 Name: Kavin Kumar
+
+
 Student ID: 101432694 
+
+# How to interact with Blockchain
+
+The interaction is customised for a local blockchain. You can spin up a local blockchain using geth with the command 
+ ```
+ geth --datadir=./mydata --http --dev --mine --rpc.enabledeprecatedpersonal --allow-insecure-unlock --http.api eth,net,web3,personal console
+ ```
+
+ This will create a blockchain with an http RPC server on localhost:8545
+ 
+ 
+ Using the console create some wallets with the command `personal.newAccount()` and set the password as 'password'
+ Then use the following command to transfer money over from the 
+
+ ```
+ eth.sendTransaction({from: eth.coinbase, to: <Replace with address>, value: web3.toWei(<Replace with ether amount>, "ether")})
+ ```
+
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
